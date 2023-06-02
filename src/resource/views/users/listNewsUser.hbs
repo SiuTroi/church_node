@@ -1,0 +1,87 @@
+{{> collaboratorHeader}}
+<div class="app-content mt-header">
+  <div class="pcoded-container">
+    {{> collaboratorNavbar}}
+    <div class="pcoded-content">
+      <div class="page-header">
+        <div class="row align-items-end">
+          <div class="col-12 col-md-8">
+            <div class="page-header-title text-center text-md-start flex-column flex-md-row">
+              <i class="fa-solid fa-list-check bg-c-blue me-0 mb-2 me-md-4 mb-md-0"></i>
+              <div class="d-inline">
+                <h5>Bài đã viết</h5>
+                <span>lorem ipsum dolor sit amet, consectetur adipisicing elit</span>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="page-header-breadcrumb px-4">
+              <ul class="breadcrumb breadcrumb-title mb-0 align-items-end justify-content-end py-3 px-4">
+                <li class="breadcrumb-item ">
+                  <i class="fa-solid fa-list-check"></i>
+                </li>
+                <li class="breadcrumb-item">Bài viết </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    
+    <div class="pcoded-inner-content">
+        <div class="row">
+        <div class="card table-card table-responsive px-0">
+          <div class="card-header p-4 flex-between-center">
+            <h5>Tất cả bài viết</h5>
+            <div class="card-header-right">
+              <button type="button" class="btn btn-show-news-content">
+                <i class="fa-solid fa-chevron-down"></i>
+              </button>
+              <button type="button" class="btn btn-hide-news-content d-none">
+                <i class="fa-solid fa-chevron-up"></i>
+              </button>
+            </div>
+          </div>
+          <table class="table table-hover mb-0" style="table-layout: unset;">
+            <thead>
+                <tr>
+                    <th>STT</th>
+                    <th>Profile</th>
+                    <th>Tên bài viết</th>
+                    <th>Hạng mục</th>
+                    <th>Tác giả</th>
+                    <th>Status</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody class="news-table-content">
+                {{#each allNewsByCollaborator}}
+                <tr>
+                    <th>{{stt @index}}</th>
+                        <td><img src={{checkGender this.gender}} alt="{{this.fullName}}" class="collab-img"></td>
+                        <td>{{this.title}}</td>
+                        <td>{{this.category}}</td>
+                        <td>{{this.auther}}</td>
+                        <td>
+                            <label class="label 
+                                {{#if this.isApproved}} bg-c-success
+                                {{else}} bg-c-yellow {{/if}}"
+                            >
+                                {{#if this.isApproved}} Đã phê duyệt
+                                {{else}} Đang chờ phê duyệt{{/if}}
+                            </label>
+                        </td>
+                        <td>
+                            <button class="btn">
+                                <i class="fa-solid fa-ellipsis-vertical"></i>
+                            </button>
+                        </td>
+                </tr>
+                {{/each}}
+            </tbody>
+          </table>
+        </div>
+        </div>
+    </div>
+    </div>
+  </div>
+</div>

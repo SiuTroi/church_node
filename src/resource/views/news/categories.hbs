@@ -1,0 +1,293 @@
+{{> header}}
+<div class="app-content">
+  <div class="pcoded-container">
+    {{> navbar}}
+    <div class="pcoded-content">
+      <div class="page-header">
+        <div class="row align-items-end">
+          <div class="col-12 col-md-8">
+            <div class="page-header-title text-center text-md-start flex-column flex-md-row">
+              <i class="fa-solid fa-square bg-c-blue me-0 mb-2 me-md-4 mb-md-0"></i>
+              <div class="d-inline">
+                <h5>Quản lý danh mục</h5>
+                <span>lorem ipsum dolor sit amet, consectetur adipisicing elit</span>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="page-header-breadcrumb px-4">
+              <ul class="breadcrumb breadcrumb-title mb-0 align-items-end justify-content-end py-3 px-4">
+                <li class="breadcrumb-item ">
+                  <i class="fa-solid fa-square"></i>
+                </li>
+                <li class="breadcrumb-item">Danh mục</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="pcoded-inner-content">
+        <div class="d-flex justify-content-end">
+          <button
+            data-toggle="modal"
+            data-target="#add-category-model"
+            class="btn btn-primary px-4 mr-4"
+          >Thêm</button>
+        </div>
+        <label for="" class="fs-4 mb-2">Tất cả: </label>
+        <div class="col-sm-6 col-lg-4">
+          <ul class="list-group py-3 box-shadow card">
+            {{#each categories}}
+              <li
+                class="list-group-item d-flex justify-content-between align-items-center border-bottom"
+                aria-current="true"
+                style="border: none;"
+              >
+                <p class="category" style="text-decoration: none; color: black;" data-id="{{this._id}}">{{this.category}}</p>
+                <p class="d-none keyword" data-id="{{this._id}}">{{this.seo.keyword}}</p>
+                <p class="d-none description" data-id="{{this._id}}">{{this.seo.description}}</p>
+                
+                {{#if ../user.isAdmin}}
+                  <div>
+                    <button
+                      class="btn btn-primary"
+                      data-toggle="modal"
+                      data-id="{{this._id}}"
+                      {{!-- data-target="#edit-category-modal" --}}
+                      style="font-size: 14px;"
+                      id="btn-edit-category-modal"
+                    >Sửa</button>
+
+                    <button
+                      class="btn btn-danger"
+                      data-toggle="modal"
+                      data-id="{{this._id}}"
+                      data-target="#delete-category-modal"
+                      style="font-size: 14px;"
+                    >Xóa</button>
+                  </div>
+                {{else}}
+                <div class="{{isCateOfCurrentUser ../user._id this.cateUserId}}" style="">
+                    <button
+                      class="btn btn-primary"
+                      data-toggle="modal"
+                      data-id="{{this._id}}"
+                      {{!-- data-target="#edit-category-modal" --}}
+                      style="font-size: 14px;"
+                      id="btn-edit-category-modal"
+                    >Sửa</button>
+
+                    <button
+                      class="btn btn-danger"
+                      data-toggle="modal"
+                      data-id="{{this._id}}"
+                      data-target="#delete-category-modal"
+                      style="font-size: 14px;"
+                    >Xóa</button>
+                  </div>
+                {{/if}}
+              </li>
+            {{/each}}
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+{{! POPUP ADD NEW CATEGORY }}
+<form
+  action="/admin/tab/categories/create"
+  method="POST"
+  id="add-category-model"
+  class="modal"
+  tabindex="-1"
+  role="dialog"
+  enctype="multipart/form-data"
+>
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Thêm danh mục</h5>
+        <button
+          type="button"
+          class="close"
+          data-dismiss="modal"
+          aria-label="Close"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="form-group px-4 mt-2">
+        <label for="category">Tên danh mục</label>
+        <input type="text" class="form-control" id="category" name="category" />
+      </div>
+      <div class="form-group px-4 mt-2">
+        <label for="keyword">Từ khóa: </label>
+        <input type="text" class="form-control" id="keyword" name="keyword" />
+      </div>
+      <div class="form-group px-4 mt-2 mb-3">
+        <label for="description">Mô tả: </label>
+        <textarea name="description" class="form-control" id="description" cols="30" rows="5"></textarea>
+      </div>
+      <div class="form-group px-4 mt-2 mb-3">
+        <label for="image">Hình ảnh: </label>
+        <input type="file" name="image" id="image" class="form-control"></input>
+      </div>
+      <div class="modal-footer">
+        <button type="submit" class="btn btn-success">Thêm</button>
+        <button
+          type="button"
+          class="btn btn-secondary"
+          data-dismiss="modal"
+        >Hủy</button>
+      </div>
+    </div>
+  </div>
+</form>
+
+{{!-- POPUP EDIT CATEGORY --}}
+<form 
+  id="edit-category-modal"
+  name="edit-category-modal" 
+  class="modal"
+  tabindex="-1"
+  role="dialog"
+  method="POST"
+  enctype="multipart/form-data"
+>
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Sửa danh mục</h5>
+        <button
+          type="button"
+          class="close"
+          data-dismiss="modal"
+          aria-label="Close"
+        >
+          <span aria-hidden="true" class="btn-cancel-edit-model">&times;</span>
+        </button>
+      </div>
+      <div class="form-group p-4">
+        <label for="category">Tên danh mục</label>
+        <input type="text" class="form-control " id="edit-input-category-modal" name="category" />
+      </div>
+      <div class="form-group px-4 mt-2">
+        <label for="keyword">Từ khóa: </label>
+        <input type="text" class="form-control" id="edit-input-keyword" name="keyword" />
+      </div>
+      <div class="form-group px-4 mt-2 mb-3">
+        <label for="description">Mô tả: </label>
+        <textarea name="description" class="form-control" id="edit-input-description" cols="30" rows="5"></textarea>
+      </div>
+      <div class="form-group px-4 mt-2 mb-3">
+        <label for="image">Hình ảnh: </label>
+        <input type="file" name="image" id="edit-input-image" class="form-control"></input>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-success" id="btn-edit-category">Sửa</button>
+        <button
+          type="button"
+          class="btn btn-secondary btn-cancel-edit-model"
+          data-dismiss="modal"
+          aria-label="Close"
+          
+        >Hủy</button>
+      </div>
+    </div>
+  </div>
+</form>
+
+
+{{! FORM HIDE WHEN DELETE A CATEGORY }}
+<form name="delete-category-form" method="POST"></form>
+{{!-- <form name="edit-category-modal" method="POST"></form> --}}
+
+{{! POPUP WHEN DELETE A CATEGORY }}
+<div
+  id="delete-category-modal"
+  class="modal"
+  tabindex="-1"
+  role="dialog"
+>
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Xóa danh mục</h5>
+        <button
+          type="button"
+          class="close"
+          data-dismiss="modal"
+          aria-label="Close"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p>Bạn chắc chắn muốn xóa danh mục này?</p>
+      </div>
+      <div class="modal-footer">
+        <button type="submit" class="btn btn-danger" id="btn-delete-category">Xóa</button>
+        <button
+          type="button"
+          class="btn btn-secondary"
+          data-dismiss="modal"
+        >Hủy</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function() {
+    let categoryId;
+    const deleteCategoryModelForm = document.forms["delete-category-form"];
+    const btnDeleteCategory = document.getElementById('btn-delete-category');
+    $("#delete-category-modal").on("show.bs.modal", function(event) {
+      const button = $(event.relatedTarget);
+      categoryId = button.data("id");
+      
+      btnDeleteCategory.addEventListener('click', function() {
+        deleteCategoryModelForm.action = '/admin/tab/categories/' + categoryId + '/delete?_method=DELETE'
+        deleteCategoryModelForm.submit()
+      })
+    })
+  })
+</script>
+<script>
+  document.addEventListener("DOMContentLoaded", function() {
+    const editCategoryModal = document.forms["edit-category-modal"];
+    var categoryId;
+    var categoryValues = [];
+    document.querySelectorAll('#btn-edit-category-modal').forEach(button => {
+      button.addEventListener('click', function(event) {
+        // Lấy giá trị attribute data-id của button được kích hoạt
+        categoryId = event.target.getAttribute('data-id');
+        var category = $('.category[data-id="' + categoryId + '"]').text().trim();
+        var keyword = $('.keyword[data-id="' + categoryId + '"]').text().trim();
+        var description = $('.description[data-id="' + categoryId + '"]').text().trim();
+        
+        $('#edit-input-category-modal').val(category); // #modal-input là id của input trong modal
+        $('#edit-input-keyword').val(keyword); // #modal-input là id của input trong modal
+        $('#edit-input-description').val(description); // #modal-input là id của input trong modal
+        $('#edit-category-modal').modal('show');
+      });
+    });
+    $('#btn-edit-category').click(function() {
+      editCategoryModal.action = "/admin/tab/categories/" + categoryId + "/edit";
+      editCategoryModal.submit();
+    });
+
+    $('.btn-cancel-edit-model').click(function() {
+      $('#edit-category-modal').modal('hide')
+    });
+  });
+</script>
+<script>
+    let textarea = document.querySelector('textarea');
+    let text = textarea.value.trim();
+    textarea.value = text;
+</script>

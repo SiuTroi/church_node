@@ -1,0 +1,138 @@
+{{> header}}
+<div class="app-content mt-header">
+  <div class="pcoded-container">
+    {{> navbar}}
+    <div class="pcoded-content">
+      <div class="page-header">
+        <div class="row align-items-end">
+          <div class="col-12 col-md-8">
+            <div class="page-header-title text-center text-md-start flex-column flex-md-row">
+              <i class="fa-solid fa-list-check bg-c-blue me-0 mb-2 me-md-4 mb-md-0"></i>
+              <div class="d-inline">
+                <h5>Quản lý bài viết</h5>
+                <span>lorem ipsum dolor sit amet, consectetur adipisicing elit</span>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="page-header-breadcrumb px-4">
+              <ul class="breadcrumb breadcrumb-title mb-0 align-items-end justify-content-end py-3 px-4">
+                <li class="breadcrumb-item ">
+                  <i class="fa-solid fa-list-check"></i>
+                </li>
+                <li class="breadcrumb-item">Bài viết </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="pcoded-inner-content">
+        <div class="mt-4">
+          <h3>Cập nhật bài viết</h3>
+          <form
+            class="mt-4"
+            method="POST"
+            action="/admin/news/{{newsDetail._id}}/update"
+            enctype="multipart/form-data"
+          >
+            <div class="row">
+              <div class="form-group col-7 mb-3">
+                <label for="name">Tiêu đề bài viết <span class="text-danger">*</span></label>
+                <input
+                  type="text"
+                  class="form-control"
+                  value="{{compare newsDetail.title formValue.title}}"
+                  id="title"
+                  name="title"
+                />
+                {{#if errors}}
+                    <p class="label text-danger text-error">{{objError.title}}</p>
+                {{/if}}
+              </div>
+            </div>
+            <div class="row">
+              <div class="form-group col-2 mb-3">
+                <label for="category">Danh mục bài viết: </label>
+                <select id="category" name="category" class="form-control">
+                  {{#each categories}}
+                    <option
+                      value="{{this.category}}"
+                    >{{this.category}}</option>
+                  {{/each}}
+                </select>
+              </div>
+              {{!-- <div class="form-group col-3 mb-3">
+                <label for="auther">Tác giả: <span class="text-danger">*</span></label>
+                <input
+                  class="form-control"
+                  value="{{compare newsDetail.auther formValue.auther}}"
+                  id="auther"
+                  name="auther"
+                />
+                {{#if errors}}
+                    <p class="label text-danger text-error">{{objError.auther}}</p>
+                {{/if}}
+              </div> --}}
+            </div>
+            <div class="form-group mb-2">
+                <label for="image">Ảnh bài viết: <span class="text-danger">*</span></label>
+                <input 
+                  type="file"
+                  name="image" id="image" class="form-control image-input"
+                  value="{{#if newsDetail.image}} {{newsDetail.image}} {{/if}}" />
+                  {{#if errors}}
+                    <p class="label text-danger text-error">{{objError.image}}</p>
+                  {{/if}}
+            </div>
+            <div class="form-group mb-2">
+                <label for="description">Mô Tả (đoạn văn ngắn hiện trên bài viết): <span class="text-danger">*</span></label>
+                <textarea name="description" id="description" class="form-control" rows="5" cols="40" 
+                value="{{compare newsDetail.description formValue.description}}">
+                  {{compare newsDetail.description formValue.description}}
+                </textarea>
+            </div>
+            <div class="form-group mb-3">
+              <label for="content">Nội dung bài viết: <span class="text-danger">*</span></label>
+              <textarea
+                class="form-control"
+                value="{{compare newsDetail.content formValue.content}}"
+                name="content"
+                id="content"
+                class="form-control"
+                rows="10"
+                cols="80"
+              >
+                {{compare newsDetail.content formValue.content}}
+              </textarea>
+              {{#if errors}}
+                  <p class="label text-danger text-error">{{objError.content}}</p>
+              {{/if}}
+            </div>
+            <button type="submit" class="btn btn-primary">Lưu lại</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script src="/ckeditor/ckeditor.js"></script>
+<script>
+    let textarea = document.querySelector('textarea');
+    let text = textarea.value.trim();
+    textarea.value = text;
+</script>
+<script>
+  CKEDITOR.editorConfig = function( config ) {
+    config.entities_latin = false; 
+    config.entities_greek = false; 
+    config.entities = false; 
+    config.basicEntities = false; 
+  };
+  CKEDITOR.replace('content', {
+    extraPlugins:'filebrowser',
+    filebrowserBrowseUrl:'/list',//upload location
+    filebrowserUploadMethod:'form',
+    filebrowserUploadUrl:'/admin/images/upload'//route
+  })
+</script>

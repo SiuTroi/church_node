@@ -1,0 +1,134 @@
+.logo {
+    height: var(--header-height);
+    background: #263544;
+    padding: 20px 10px;
+}
+
+
+.logo-link {
+    font-size: 22px; 
+    word-spacing: 10px;
+    text-decoration: none;
+    color: white;
+}
+
+.switch-icon-off {
+    display: block;
+}
+
+.switch-icon-on {
+    display: none;
+}
+.switch-icon-off, .switch-icon-on {
+    font-size: 16px;
+    color: white;
+}
+
+.header {
+    top: 0;
+    left: 0;right: 0;
+    z-index: 1028;
+
+}
+
+.header-content {
+    background-color: #263544;
+    height: var(--header-height);
+}
+.header-nav {
+    padding: 0 10px;
+    flex: 1;
+    height: var(--header-height);
+}
+.admin-img {
+    width: 32px;
+    height: 32px;
+}
+.search_area {
+    width: 96%;
+    position: relative;
+}
+
+.search_field input {
+    color: #000;
+    font-size: 17px;
+    height: 45px;
+    width: 100%;
+    padding-left: 22px;
+    border: 0;
+    padding-right: 15px;
+    border-bottom: 1px solid #f4f7fc;
+    background: #f5f7fd;
+    border-radius: 30px;
+}
+.search_area button {
+    position: absolute;
+    right: 0;
+    top: 0;
+    height: 100%;
+    background: 0 0;
+    font-size: 12px;
+    border: 0;
+    padding: 0 20px;
+}
+
+.admin-obile-option , .collabr-option {
+    list-style: none;
+    padding: 12px 0 32px;
+    top: 28px;
+    right: 24px;
+    min-width: 200px;
+}
+
+.admin-obile-option li a , .collabr-option li a {
+    text-decoration: none;
+    display: block;
+    padding: 10px 20px;
+}
+
+.admin-obile-option li a:hover , .collabr-option li a:hover {
+    background-color: #ececec;
+}
+
+@media (min-width: 992px) {
+    .header {
+        background-color: #fff;
+    }
+
+    .header-nav {
+        background-color: #fff;
+    }
+
+    .logo {
+        width: 250px;
+    }
+    
+    .switch-icon-off {
+        display: none;
+    }
+
+    .switch-icon-on {
+        display: block;
+    }
+
+    .search_area {
+        width: 400px;
+    }
+
+    .ml-pcoded-nav {
+        margin-left: var(--pcoded-width) ;
+    }
+    .pcoded-navbar {
+        display: block;
+    }
+
+    .pcoded-content {
+        margin-left: var(--pcoded-width);
+    }
+}
+
+@media (min-width: 1200px) {
+    .search_area {
+        width: 480px;
+    }
+}

@@ -1,0 +1,14 @@
+.login-block {
+    margin: 0 auto;
+    padding: 30px 12px;
+    min-height: 93.6vh;
+    background-color: #42a5f5;
+    overflow-x: hidden;
+    color: #333;
+    background-image: linear-gradient(rgba(255,255,255,0.7) 240px,#f2f7fb 0%);
+}
+
+.login-block .auth-box {
+    margin: 20px auto 0;
+    max-width: 450px;
+}

@@ -1,0 +1,65 @@
+<header class="header position-fixed">
+    <div class="header-content d-flex flex-between-center justify-content-xl-start">
+        <div class="logo flex-between-center box-shadow">
+            <a href="/admin" class="logo-link d-none d-lg-block">
+                <img src="/images/logo.png" alt="">
+            </a>
+            <div class="switch-nav">
+                <button class="btn switch-icon-off">
+                    <i class="fa-solid fa-toggle-off"></i>
+                </button>
+                <button class="btn switch-icon-on">
+                    <i class="fa-solid fa-toggle-on"></i>
+                </button>
+            </div>
+        </div>
+
+        {{!-- Mobile Logo --}}
+        <div class="d-block d-lg-none">
+            <a href="/admin" class="logo-link">
+                <img src="/images/logo.png" alt="">
+            </a>
+        </div>
+
+        <nav class="nav flex-between-center d-none d-lg-flex lg-bg-white box-shadow header-nav header-nav-right">
+            {{> search}}
+            <div class="d-flex align-items-center">
+                <button class="btn me-4 fs-5"><i class="fa-solid fa-earth-americas"></i></button>
+                <div class="admin-account d-flex">
+                    <img src="/images/admin.png" alt="admin" class="admin-img rounded-circle mr-2">
+                    <h6 class="nav-link account text-secondary" style="font-size: 13px;">{{user.email}}</h6>
+                    <a href="/admin/logout" class="btn">
+                        <i class="{{isHaveAccount user.email "fa-solid fa-right-from-bracket"}}"></i>
+                    </a>
+                </div>
+            </div>
+        </nav>
+
+        {{!-- ellipsis menu for mobile-tablet --}}
+        <nav class="d-block d-lg-none position-relative">
+            <button class="btn text-white ellipsis-btn">
+                <i class="fa-solid fa-ellipsis"></i>
+            </button>
+            <ul class="card position-absolute d-none admin-obile-option">
+                <span class="label text-secondary fw-semibold ps-3">{{user.email}}</span>
+                <li class="border border-bottom"><a href="#" class="text-secondary">
+                    <i class="fa-solid fa-earth-americas" style="width: 20px"></i> Trang web</a>
+                </li>
+                <li>
+                    <a href="/admin/logout" class="text-secondary">
+                    <i class="fa-solid fa-right-from-bracket" style="width: 20px"></i> Đăng xuất</a>
+                </li>
+            </ul>
+        </nav>
+
+
+    </div>
+</header>
+
+<script>
+    const ellipsisBtn = document.querySelector('.ellipsis-btn');
+    const adminMobileOption = document.querySelector('.admin-obile-option')
+    ellipsisBtn.addEventListener('click', function() {
+        adminMobileOption.classList.toggle('d-none')
+    })
+</script>

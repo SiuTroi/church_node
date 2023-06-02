@@ -1,0 +1,132 @@
+{{> header}}
+<div class="app-content">
+    <div class="pcoded-container">
+        {{> navbar}}
+        <div class="pcoded-content">
+            <div class="page-header">
+                <div class="row align-items-end">
+                    <div class="col-12 col-md-8">
+                        <div class="page-header-title text-center text-md-start flex-column flex-md-row">
+                        <i class="fa-solid fa-pen-clip bg-c-blue me-0 mb-2 me-md-4 mb-md-0"></i>
+                        <div class="d-inline">
+                            <h5>Tạo bài viết</h5>
+                            <span>lorem ipsum dolor sit amet, consectetur adipisicing elit</span>
+                        </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="page-header-breadcrumb px-4">
+                        <ul class="breadcrumb breadcrumb-title mb-0 align-items-end justify-content-end py-3 px-4">
+                            <li class="breadcrumb-item ">
+                                <i class="fa-solid fa-pen-clip"></i>
+                            </li>
+                            <li class="breadcrumb-item">Tạo bài viết </li>
+                        </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="pcoded-inner-content">
+                <div class="mt-4">
+                    <h3>Tạo bài viết</h3>
+                    <form method="POST" action="/admin/news/store" enctype="multipart/form-data" >
+                        <div class="row col-7">
+                            <div class="form-group mb-2">
+                                <label for="title">Tiêu đề <span class="text-danger">*</span></label>
+                                <input type="text" class="form-control" id="title" name="title"
+                                 onchange="hideError(this)"
+                                 value="{{#if formValue.title}} {{formValue.title}} {{/if}}">
+                                {{#if errors}}
+                                    <p class="label text-danger text-error">{{objError.title}}</p>
+                                {{/if}}
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="form-group col-2 mb-2">
+                                <label for="category">Danh mục bà viết: </label>
+                                <select id="category" name="category" class="form-control" 
+                                onchange="hideError(this)"
+                                value="{{#if formValue.category}} {{formValue.category}} {{/if}}">
+                                    {{#each categories}}
+                                        <option>{{this.category}}</option>
+                                    {{/each}}
+                                </select>
+                            </div>
+                            {{!-- <div class="form-group col-3 mb-2">
+                                <label for="auther">Tác giả: <span class="text-danger">*</span></label>
+                                <input type="text" class="form-control" id="auther" name="auther" 
+                                onchange="hideError(this)"
+                                value="{{#if formValue.auther}} {{formValue.auther}} {{/if}}">
+                                {{#if errors}}
+                                    <p class="label text-danger text-error">{{objError.auther}}</p>
+                                {{/if}}
+                            </div> --}}
+                        </div>
+                        <div class="form-group mb-2">
+                            <label for="image">Ảnh bài viết: <span class="text-danger">*</span></label>
+                            <input 
+                                type="file"
+                                name="image" id="image" class="form-control image-input"
+                                onchange="hideError(this)"
+                                value="{{#if formValue.image}} {{formValue.image}} {{/if}}" />
+                            {{#if errors}}
+                                <p class="label text-danger text-error">{{objError.image}}</p>
+                            {{/if}}
+                        </div>
+                        <div class="form-group mb-2">
+                            <label for="description">Mô Tả (đoạn văn ngắn hiện trên bài viết): <span class="text-danger">*</span></label>
+                            <textarea name="description" id="description" class="form-control" rows="5" cols="40" 
+                            onchange="hideError(this)"
+                            value="{{#if formValue.description}} {{formValue.description}} {{/if}}">
+                                {{#if formValue.description}} {{formValue.description}} {{/if}}
+                            </textarea>
+                            {{#if errors}}
+                                <p class="label text-danger text-error">{{objError.description}}</p>
+                            {{/if}}
+                        </div>
+                        <div class="form-group mb-2">
+                            <label for="content">Nội dung bài viết: <span class="text-danger">*</span></label>
+                            <textarea name="content" id="content" class="form-control" rows="10" cols="80" 
+                            onchange="hideError(this)"
+                            value="{{#if formValue.content}} {{formValue.content}} {{/if}}">
+                            {{#if formValue.content}} {{{formValue.content}}} {{/if}}
+                                
+                            </textarea>
+                            {{#if errors}}
+                                <p class="label text-danger text-error">{{objError.content}}</p>
+                            {{/if}}
+                        </div>
+                        <button type="submit" class="btn btn-primary mt-3">Tạo bài viết</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+  function hideError(input) {
+    input.nextElementSibling.style.display = 'none';
+  }
+
+</script>
+<script>
+    let textarea = document.querySelector('textarea');
+    let text = textarea.value.trim();
+    textarea.value = text;
+</script>
+<script src="/ckeditor/ckeditor.js"></script>
+<script>
+    CKEDITOR.editorConfig = function( config ) {
+        config.entities_latin = false; 
+        config.entities_greek = false; 
+        config.entities = false; 
+        config.basicEntities = false; 
+    };
+    CKEDITOR.replace('content', {
+        extraPlugins:'filebrowser',
+        filebrowserBrowseUrl:'/list',//upload location
+        filebrowserUploadMethod:'form',
+        filebrowserUploadUrl:'/admin/images/upload'//route
+    })
+</script>

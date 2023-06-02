@@ -1,0 +1,205 @@
+{{> header}}
+<div class="app-content">
+  <div class="pcoded-container">
+    {{> navbar}}
+    <div class="pcoded-content">
+      <div class="page-header">
+        <div class="row align-items-end">
+          <div class="col-12 col-md-8">
+            <div class="page-header-title text-center text-md-start flex-column flex-md-row">
+              <i class="fa-solid fa-house-chimney-window bg-c-blue me-0 mb-2 me-md-4 mb-md-0"></i>
+              <div class="d-inline">
+                <h5>Trang chủ</h5>
+                <span>lorem ipsum dolor sit amet, consectetur adipisicing elit</span>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="page-header-breadcrumb px-4">
+              <ul class="breadcrumb breadcrumb-title mb-0 align-items-end justify-content-end py-3 px-4">
+                <li class="breadcrumb-item">
+                  <i class="fa-solid fa-house-chimney-window"></i>
+                </li>
+                <li class="breadcrumb-item">Trang chủ</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="pcoded-inner-content">
+        <div class="row justify-content-center"> 
+          <div class="col-12 row px-0">
+            {{!-- Tất cả bài viết --}}
+            <div class="col-12 col-md-6 col-xl-4">
+              <div class="card comp-card">
+                <div class="card-body">
+                  <div class="row align-items-center">
+                    <div class="col">
+                      <h6 class="m-b-25">Tất cả bài viết</h6>
+                      <h3 class="f-w-700 text-primary">{{getLength allNews}}</h3>
+                      <p class="">Cập nhật: {{dateNow}}</p>
+                    </div>
+                    <div class="col-auto">
+                      <i class="fas fa-eye bg-c-blue"></i>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-12 col-md-6 col-xl-4">
+              <div class="card comp-card">
+                <div class="card-body">
+                  <div class="row align-items-center">
+                    <div class="col">
+                      <h6 class="m-b-25">Đang chờ phê duyệt</h6>
+                      <h3 class="f-w-700 text-warning">{{countNewsPendingApprovel}}</h3>
+                      <p class="">Cập nhật: {{dateNow}}</p>
+                    </div>
+                    <div class="col-auto">
+                      <i class="fas fa-pause bg-c-yellow"></i>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-12 col-md-6 col-xl-4">
+              <div class="card comp-card">
+                <div class="card-body">
+                  <div class="row align-items-center">
+                    <div class="col">
+                      <h6 class="m-b-25">Số cộng tác viên</h6>
+                      <h3 class="f-w-700 text-success">{{collabrCount users}}</h3>
+                      <p class="">Cập nhật: {{dateNow}}</p>
+                    </div>
+                    <div class="col-auto">
+                      <i class="fas fa-user bg-c-success"></i>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-12">
+            <div class="card table-card">
+              <div class="card-header p-4 flex-between-center">
+                <h5>Cộng tác viên nổi bật</h5>
+                <div class="card-header-right">
+                  <button class="btn btn-show-collabr-content">
+                    <i class="fa-solid fa-chevron-down"></i>
+                  </button>
+                  <button class="btn btn-hide-collabr-content d-none">
+                    <i class="fa-solid fa-chevron-up"></i>
+                  </button>
+                </div>
+              </div>
+
+              <div class="pb-0">
+                <div class="table-responsive">
+                  <table class="table table-hover mb-0">
+                    <thead>
+                      <tr>
+                        <th>STT</th>
+                        <th>Profile</th>
+                        <th>Loại hoạt động</th>
+                        <th>Sở hữu</th>
+                        <th>Công việc</th>
+                        {{!-- <th>Năm sinh</th> --}}
+                        {{!-- <th>Địa chỉ</th> --}}
+                        <th>Tình trạng</th>
+                      </tr>
+                    </thead>
+                    <tbody class="collabr-table-content">
+                      {{#if collaboratorFeatured}}
+                        {{#each collaboratorFeatured}}
+                          <tr>
+                            <td>{{stt @index}}</td>
+                            <td><img src={{checkGender this.gender}} alt="{{this.fullName}}" class="collab-img"></td>
+                            <td>Cộng tác viên</td>
+                            <td>{{this.fullName}}</td>
+                            <td>Viết nội dung</td>
+                            {{!-- <td>{{dateConvert this.date}}</td> --}}
+                            {{!-- <td>{{this.address}}</td> --}}
+                            <td><label class="label label-success">Đã phê duyệt</label>
+                          </td>
+                          </tr>
+                        {{/each}}
+                      {{else}}
+                        <tr>
+                          <td colspan="8" class="text-center text-secondary">Cộng tác viên có số lượng bài viết nhiều hơn 10 bài được xếp cộng tác viên nổi bật</td>
+                        </tr>
+                      {{/if}}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {{!-- Bài viết mới --}}
+          <div class="col-md-12">
+            <div class="card table-card">
+              <div class="card-header p-4 flex-between-center">
+                <h5>Bài viết mới</h5>
+                <div class="card-header-right">
+                  <button class="btn btn-show-news-content">
+                    <i class="fa-solid fa-chevron-down"></i>
+                  </button>
+                  <button class="btn btn-hide-news-content d-none">
+                    <i class="fa-solid fa-chevron-up"></i>
+                  </button>
+                </div>
+              </div>
+
+              <div class="pb-0">
+                <div class="table-responsive">
+                  <table class="table table-hover mb-0">
+                    <thead>
+                      <tr>
+                        <td>STT</td>
+                        <th>Tên bài viết</th>
+                        <th>Hạng mục</th>
+                        <th>Tác giả</th>
+                        <th>Ngày viết</th>
+                        <th>Tình trạng</th>
+                      </tr>
+                    </thead>
+                    <tbody class="news-table-content">
+                      {{#if newsLastest}}
+                        {{#each newsLastest}}
+                          <tr>
+                            <td>{{stt @index}}</td>
+                            <td>{{this.title}}</td>
+                            <td>{{this.category}}</td>
+                            <td>{{this.auther}}</td>
+                            <td>{{dateConvert this.createdAt}}</td>
+                            <td>
+                              <label class="label 
+                                {{#if this.isApproved}} bg-c-success
+                                {{else}} bg-c-yellow {{/if}}"
+                              >
+                                {{#if this.isApproved}} Đã phê duyệt
+                                {{else}} Đang chờ phê duyệt{{/if}}
+                              </label>
+                            </td>
+                          </tr>
+                        {{/each}}
+                      {{else}}
+                        <tr>
+                          <td colspan="8" class="text-center text-secondary">Hiện tại chưa có bài viết nổi bật nào.</td>
+                        </tr>
+                      {{/if}}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        </div>
+      </div>
+  </div>
+</div>

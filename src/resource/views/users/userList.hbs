@@ -1,0 +1,199 @@
+{{> header}}
+<div class="app-content">
+  <div class="pcoded-container">
+    {{> navbar}}
+    <div class="pcoded-content">
+      <div class="page-header">
+        <div class="row align-items-end">
+          <div class="col-12 col-md-8">
+            <div class="page-header-title text-center text-md-start flex-column flex-md-row">
+              <i class="fa-solid fa-user-pen bg-c-blue me-0 mb-2 me-md-4 mb-md-0"></i>
+              <div class="d-inline">
+                <h5>Tài khoản</h5>
+                <span>lorem ipsum dolor sit amet, consectetur adipisicing elit</span>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="page-header-breadcrumb px-4">
+              <ul class="breadcrumb breadcrumb-title mb-0 align-items-end justify-content-end py-3 px-4">
+                <li class="breadcrumb-item ">
+                  <i class="fa-solid fa-user-pen"></i>
+                </li>
+                <li class="breadcrumb-item">Tài khoản </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="pcoded-inner-content">
+        {{#if user.isAdmin}}
+          <div class="d-flex justify-content-end mb-3">
+            <button
+              data-toggle="modal"
+              data-target="#add-collaborator-model"
+              class="btn btn-primary px-4 mr-4"
+            >Thêm tài khoản</button>
+          </div> 
+        {{/if}}
+        <div class="col-md-12">
+          <div class="card table-card">
+            <div class="card-header p-4 flex-between-center">
+              <h5>Tất cả tài khoản</h5>
+              <div class="card-header-right">
+                <i class="fa-solid fa-chevron-left"></i>
+              </div>
+            </div> 
+            <div class="table-responsive px-0">
+                <table class="table table-hover mb-0" style="table-layout: unset;">
+                  <thead>
+                    <tr>
+                      <th>STT</th>
+                      <th>Profile</th>
+                      <th>Email</th>
+                      <th>Loại hoạt động</th>
+                      <th>Quyền Admin</th>
+                      {{!-- <th>Giới tính</th> --}}
+                      <th>Ngày Tạo</th>
+                      <th>Xử lý</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {{#each users}}
+                      <tr>
+                        <th>{{stt @index}}</th>
+                        <td><img src={{checkGender this.gender}} alt="" class="collab-img"></td>
+                        <td>{{isCurrentUser ../user._id this._id this.email}}</td>
+                        <td>{{#if this.isAdmin}} Quản trị viên {{else}} Cộng tác viên {{/if}}</td>
+                        <td>{{#if this.isAdmin}} Có {{else}} Không {{/if}}</td>
+                        {{!-- <td>{{dateConvert this.date}}</td> --}}
+                        {{!-- <td>Nam</td> --}}
+                        <td>{{dateConvert this.createdAt}}</td>
+                        <td>
+                          <a
+                            class="btn btn-link text-primary"
+                            href="/admin/tab/users/{{this._id}}/news/list"
+                          ><i class="fa-solid fa-clipboard-list"></i></a>
+
+                            <button
+                              class="{{allowDeleteUser ../user.isAdmin}}"
+                              data-toggle="modal"
+                              data-id="{{this._id}}"
+                              data-target="#delete-collabr-modal"
+                              style="cursor: pointer;"
+                            ><i class="fa-solid fa-trash"></i></button>
+                          {{#if this.isAdmin}}
+                          {{else}}
+                            {{#if ../user.isAdmin}}
+                              <a href="/admin/tab/users/{{this._id}}/acceptusertobeadmin" title="Đặt làm quản trị viên" class="btn">
+                                <i class="fa-solid fa-user-check text-warning"></i>
+                              </a>
+                            {{/if}}      
+                          {{/if}}      
+                        </td>
+                      </tr>
+                    {{/each}}
+                  </tbody>
+                </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{{! FORM HIDE WHEN DELETE A CATEGORY }}
+<form name="delete-collabr-form" method="POST"></form>
+
+{{!-- POPUP ADD COLLABORATOR --}}
+<form
+  action="/admin/tab/users/create"
+  method="POST"
+  id="add-collaborator-model"
+  class="modal"
+  tabindex="-1"
+  role="dialog"
+>
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Thêm tài khoản</h5>
+        <button
+          type="button"
+          class="close"
+          data-dismiss="modal"
+          aria-label="Close"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="form-group px-4 mt-2">
+        <label for="email">Email: </label>
+        <input type="text" class="form-control" id="email" name="email" />
+      </div>
+      <div class="form-group px-4 mt-2 mb-3">
+        <label for="password">Mật khẩu: </label>
+        <input type="password" class="form-control" id="password" name="password" />
+      </div>
+      <div class="col-12 px-4 mt-2 mb-3">
+        <h5 class="text-secondary">Quyền tài khoản</h5>
+        <div class="form-check col-12 col-lg-6">
+          <input class="form-check-input" type="radio" name="role" value="isAdmin" id="isAdmin">
+          <label class="form-check-label" for="isAdmin">
+            Quản trị viên
+          </label>
+        </div>
+        <div class="form-check col-12 col-lg-6">
+          <input class="form-check-input" type="radio" name="role" value="user" id="user">
+          <label class="form-check-label" for="user">
+            Cộng tác viên
+          </label>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="submit" class="btn btn-success">Thêm</button>
+        <button
+          type="button"
+          class="btn btn-secondary"
+          data-dismiss="modal"
+        >Hủy</button>
+      </div>
+    </div>
+  </div>
+</form>
+{{!-- POPUP DELETE COLLABORATOR --}}
+<div
+  id="delete-collabr-modal"
+  class="modal"
+  tabindex="-1"
+  role="dialog"
+>
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Xóa cộng tác việc</h5>
+        <button
+          type="button"
+          class="close"
+          data-dismiss="modal"
+          aria-label="Close"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p>Bạn chắc chắn muốn xóa tài khoản này?</p>
+      </div>
+      <div class="modal-footer">
+        <button type="submit" class="btn btn-danger" id="btn-delete-collabr">Xóa</button>
+        <button
+          type="button"
+          class="btn btn-secondary"
+          data-dismiss="modal"
+        >Hủy</button>
+      </div>
+    </div>
+  </div>
+</div>

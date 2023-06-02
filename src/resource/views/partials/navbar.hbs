@@ -1,0 +1,62 @@
+<div class="pcoded-navbar">
+    <div class="d-block d-lg-none py-2 py-lg-0">
+        {{> search}}
+    </div>
+    <div class="pcoded-navigation-label text-white">Navigation</div>
+        <ul class="pcoded-item">
+            <li class="pcoded-hasmenu {{#if isHomeActive}}active{{/if}} ">
+                <a class="pcoded-hasmenu-link mt-1 text-white" href="/admin/home">
+                <span><i class="fa-solid fa-house-chimney-window"></i></span> Trang chủ</a>
+            </li>
+            <li class="pcoded-hasmenu {{#if isNewsActive}}active{{/if}} ">
+                <a class="pcoded-hasmenu-link mt-1 text-white" href="/admin/tab/manage-post/all">
+                <span><i class="fa-solid fa-list-check"></i></span> Tất cả bài viết</a>
+            </li>
+            <li class="pcoded-hasmenu {{#if isCategoryActive}}active{{/if}} ">
+                <a class="pcoded-hasmenu-link mt-1 text-white" href="/admin/tab/categories">
+                <span><i class="fa-solid fa-square"></i></span> Danh mục</a>
+            </li>
+            {{#if user.isAdmin}}
+                <li class="pcoded-hasmenu {{#if isApprovelActive}}active{{/if}} ">
+                    <a class="pcoded-hasmenu-link mt-1 text-white" href="/admin/tab/approvel">
+                    <span><i class="fa-solid fa-check"></i></span> Cần phê duyệt
+                        {{#if countNewsPendingApprovel}}
+                            <span class="label bg-c-yellow p-1 ms-4 text-center" style="width: 22px">{{countNewsPendingApprovel}}</span>
+                        {{/if}}
+                    </a>
+                </li>
+            {{else}}
+                <li class="pcoded-hasmenu {{#if isListNewsUserActive}}active{{/if}} ">
+                    <a class="pcoded-hasmenu-link mt-1 text-white" href="/admin/tab/users/{{user._id}}/news/list">
+                    <span><i class="fa-solid fa-pen-nib"></i></span> Bài viết của bạn</a>
+                </li>
+            {{/if}}
+            <li class="pcoded-hasmenu {{#if isUserNavActive}}active{{/if}} ">
+                <a class="pcoded-hasmenu-link mt-1 text-white" href="/admin/tab/users">
+                <span><i class="fa-solid fa-user-pen"></i></span> Tài khoản</a>
+            </li>
+            {{#if user.isAdmin}}
+                <li class="pcoded-hasmenu {{#if isCustomActive}}active{{/if}} ">
+                    <a class="pcoded-hasmenu-link mt-1 text-white" href="/admin/tab/custom">
+                    <span><i class="fa-solid fa-pen-nib"></i></span> Tùy chỉnh</a>
+                </li>
+            {{/if}}
+        </ul>
+
+    {{> footer}}
+</div>
+
+<script>
+    const pcodedHasmenuList = document.querySelectorAll('.pcoded-hasmenu');
+    pcodedHasmenuList.forEach(item => {
+    item.addEventListener('click', () => {
+        // Remove "active" class from all list items
+        pcodedHasmenuList.forEach(item => {
+        item.classList.remove('active');
+        });
+        
+        // Add "active" class to clicked list item
+        item.classList.add('active');
+    });
+    });
+</script>

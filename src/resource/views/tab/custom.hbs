@@ -1,0 +1,209 @@
+{{> header}}
+<div class="app-content">
+  <div class="pcoded-container">
+    {{> navbar}}
+    <div class="pcoded-content">
+        <div class="page-header">
+            <div class="row align-items-end">
+                <div class="col-12 col-md-8">
+                    <div class="page-header-title text-center text-md-start flex-column flex-md-row">
+                    <i class="fa-solid fa-pen-nib bg-c-blue me-0 mb-2 me-md-4 mb-md-0"></i>
+                    <div class="d-inline">
+                        <h5>Tùy chỉnh</h5>
+                        <span>lorem ipsum dolor sit amet, consectetur adipisicing elit</span>
+                    </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="page-header-breadcrumb px-4">
+                    <ul class="breadcrumb breadcrumb-title mb-0 align-items-end justify-content-end py-3 px-4">
+                        <li class="breadcrumb-item ">
+                          <i class="fa-solid fa-pen-nib"></i>
+                        </li>
+                        <li class="breadcrumb-item">Tùy chỉnh</li>
+                    </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="pcoded-inner-content">
+            <h5>Home</h5>
+
+            {{!-- Seo --}}
+            <div class="ms-2">
+                <h6>Từ khóa SEO</h6>
+                <form class="row" action="/admin/tab/custom/{{seo._id}}/seo" method="POST">
+                    <div class="col-12 col-lg-5">
+                        <label for="title">Title: </label>
+                        <input value="{{seo.title}}" type="text" name="title" id='title' class="form-control">
+                    </div>
+                    <div class="col-12 col-lg-5">
+                        <label for="keyword">Từ khóa: </label>
+                        <input value="{{seo.keyword}}" type="text" name="keyword" id='keyword' class="form-control">
+                    </div>
+                    <div class="col-12 col-lg-10">
+                        <label for="description">Mô tả: </label>
+                        <textarea  value="" name="description" id="description" cols="30" rows="5" class="form-control">
+                            {{seo.description}}
+                        </textarea>
+                    </div>
+                    <div class="col-12 col-md-4 col-lg-3 mt-3">
+                        <button type="submit" class="btn btn-primary">Lưu từ khóa</button>
+                    </div>
+                </form>
+            </div>
+            {{!-- Giao diẹn --}}
+            <div class="mt-4 ms-2">
+                <form class="row" action="/admin/tab/custom/{{site._id}}/site" method="POST"  enctype="multipart/form-data" >
+                    <h5>Giao diện</h5>
+                    <div class="col-12 col-lg-10">
+                        <div class="d-flex align-items-center mb-2">
+                            <label for="" class="d-inline-block me-2">Logo: </label>
+                            <input type="file" name="logo" class="form-control d-inline-block"></input>
+                        </div>
+                        <div style="width: 120px;">
+                            <img style="width: 100%;" src="{{site.logo}}" />
+                        </div>
+                    </div>
+
+                    <div class="col-12 col-lg-10">
+                        <div class="d-flex align-items-center mb-2">
+                            <label for="" class="d-inline-block me-2">Banner: </label>
+                            <input type="file" name="banner" class="form-control d-inline-block"></input>
+                        </div>
+                        <div style="width: 120px;">
+                            <img style="width: 100%;" src="{{site.banner}}" />
+                        </div>
+                    </div>
+
+                    <div class="col-12 mt-4">
+                        <h6>Footer: </h6>
+                        <div class="">
+                            <div class="mb-3 col-12 col-lg-6">
+                                <label for="" class="d-inline-block me-2">Footer description: </label>
+                                <textarea value="{{site.footer_description}}" name="footer_description" id="footer_description" cols="30" rows="5" class="form-control ">
+                                    {{site.footer_description}}
+                                </textarea>
+                            </div>
+
+                            <div class="mb-3 col-12 col-lg-6">
+                                <label for="address">Address: </label>
+                                <input type="text" value="{{site.address}}" name="address" id="address" class="form-control ">
+                            </div>
+                            <div class="mb-3 col-12 col-lg-6">
+                                <label for="phone">Phone: </label>
+                                <input type="text" value="{{site.phone}}" name="phone" id="phone" class="form-control ">
+                            </div>
+                            <div class="mb-3 col-12 col-lg-6">
+                                <label for="website">Website: </label>
+                                <input type="text" value="{{site.website}}" name="website" id="website" class="form-control ">
+                            </div>
+                            <div class="mb-3 col-12 col-lg-6">
+                                <label for="email">Email: </label>
+                                <input type="text" value="{{site.email}}" name="email" id="email" class="form-control ">
+                            </div>
+                            <div class="mb-3 col-12 col-lg-6">
+                                <label for="fanpage">Fanpage: </label>
+                                <input type="text" value="{{site.fanpage}}" name="fanpage" id="fanpage" class="form-control ">
+                            </div>
+
+                            <div class="mb-3 col-12 col-lg-6">
+                                <label for="facebook">Facebook: </label>
+                                <input type="text" value="{{site.facebook}}" name="facebook" id="facebook" class="form-control ">
+                            </div>
+                            <div class="mb-3 col-12 col-lg-6">
+                                <label for="youtube">Youtube: </label>
+                                <input type="text" value="{{site.youtube}}" name="youtube" id="youtube" class="form-control ">
+                            </div>
+                            <div class="mb-3 col-12 col-lg-6">
+                                <label for="copyright">Copyright: </label>
+                                <input type="text" value="{{site.copyright}}" name="copyright" id="copyright" class="form-control ">
+                            </div>
+                        </div>
+                        <div class="row"> 
+                            <label for="map">Bản đồ: <button class="btn" 
+                            type="button"
+                                data-toggle="modal"
+                                data-target="#custom-map-model"
+                            ><i class="fa-solid fa-circle-question"></i></button></label>
+                            <div class="col-12 col-lg-6">
+                                <textarea value="{{site.map}}" name="map" id="map" cols="30" rows="10" class="form-control ">
+                                    {{site.map}}
+                                </textarea>
+                            </div>
+                            <div class="col-12 col-lg-6 mt-3 mt-lg-0">
+                                {{{site.map}}}
+                            </div>
+                            <div class="col-12 col-md-4 col-lg-3 mt-3">
+                                <button type="submit" class="btn btn-primary">Lưu giao diện</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+            {{!-- Custom CSS --}}
+            <div class="mt-4 ms-2">
+                <form action="/admin/tab/custom/{{site._id}}/customcss" class="row" method="POST">
+                    <h5>Custom CSS</h5>
+                    <div class="mb-3 col-12 col-lg-6">
+                        <textarea value="{{site.custom_css}}" name="custom_css" id="custom_css" cols="30" rows="20" class="form-control ">
+                            {{site.custom_css}}
+                        </textarea>
+                    </div>
+                    <div class="row">
+                        <div class="col-12 col-md-4 col-lg-3 mt-3">
+                            <button type="submit" class="btn btn-primary">Lưu</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+   </div>
+</div>
+
+<div
+  id="custom-map-model"
+  class="modal"
+  tabindex="-1"
+  role="dialog"
+>
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Cách sửa bản đồ</h5>
+        <button
+          type="button"
+          class="close"
+          data-dismiss="modal"
+          aria-label="Close"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <ol class="px-4 my-3">
+        <li><span class="text-secondary"> Vào trang </span><a href="https://www.google.com/maps" target="_blank">https://www.google.com/maps</a></li>
+        <li class="mt-2"><span class="text-secondary d-inline-block mb-1"> Nhập địa chỉ vào ô tìm kiếm </span>
+            <img class="box-shadow" style="width: 100%; border: 1px solid #ababab;" src="/images/search-map.png" alt="search-map">
+        </li>
+        <li class="mt-2"><span class="text-secondary d-inline-block mb-1"> Sao chép địa chỉ đã nhập </span>
+            <img class="box-shadow" style="width: 100%; border: 1px solid #ababab;" src="/images/map-share.png" alt="map">
+            <img class="box-shadow" style="width: 100%; border: 1px solid #ababab; margin-top: 12px;" src="/images/map-copy.png" alt="map">
+        </li>
+        <li class="mt-2"><span class="text-secondary d-inline-block mb-1"> Dán vào chỗ trống </span>
+            <img class="box-shadow" style="width: 100%; border: 1px solid #ababab;" src="/images/map-paste.png" alt="map">
+        </li>
+      </ol>
+    </div>
+  </div>
+</div>
+
+<script>
+    let textarea = document.querySelectorAll('textarea');
+    textarea.forEach(item => {
+        let text = item.value.trim();
+        item.value = text;
+    })
+</script>
